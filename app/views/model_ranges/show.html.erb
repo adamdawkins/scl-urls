@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @model_range.name %>
+</p>
+
+<p>
+  <strong>Slug:</strong>
+  <%= @model_range.slug %>
+</p>
+
+<p>
+  <strong>Manufacturer:</strong>
+  <%= @model_range.manufacturer_id %>
+</p>
+
+<%= link_to 'Edit', edit_model_range_path(@model_range) %> |
+<%= link_to 'Back', model_ranges_path %>

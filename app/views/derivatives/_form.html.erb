@@ -1,0 +1,52 @@
+<%= form_with(model: derivative, local: true) do |form| %>
+  <% if derivative.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(derivative.errors.count, "error") %> prohibited this derivative from being saved:</h2>
+
+      <ul>
+        <% derivative.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :capcode %>
+    <%= form.text_field :capcode %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :bodystyle_id %>
+    <%= form.text_field :bodystyle_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :transmission %>
+    <%= form.number_field :transmission %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fueltype %>
+    <%= form.number_field :fueltype %>
+  </div>
+
+  <div class="field">
+    <%= form.label :doors %>
+    <%= form.number_field :doors %>
+  </div>
+
+  <div class="field">
+    <%= form.label :model_id %>
+    <%= form.text_field :model_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

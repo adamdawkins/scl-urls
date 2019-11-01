@@ -1,0 +1,27 @@
+require: rubocop-rails
+
+AllCops:
+    Exclude:
+      - 'bin/**/*'
+      - 'config/**/*'
+      - 'db/**/*'
+      - 'node_modules/**/*'
+      - 'Rakefile'
+      - 'spec/factories/**/*'
+      - 'spec/support/trello_helpers.rb'
+      - 'spec/rails_helper.rb'
+      - 'spec/spec_helper.rb'
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+Style/AsciiComments: # Let the man shrug! ¯\_(ツ)_/¯
+  Enabled: False
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/Lambda:
+  EnforcedStyle: literal

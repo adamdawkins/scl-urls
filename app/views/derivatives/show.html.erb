@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Capcode:</strong>
+  <%= @derivative.capcode %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @derivative.name %>
+</p>
+
+<p>
+  <strong>Bodystyle:</strong>
+  <%= @derivative.bodystyle_id %>
+</p>
+
+<p>
+  <strong>Transmission:</strong>
+  <%= @derivative.transmission %>
+</p>
+
+<p>
+  <strong>Fueltype:</strong>
+  <%= @derivative.fueltype %>
+</p>
+
+<p>
+  <strong>Doors:</strong>
+  <%= @derivative.doors %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @derivative.model_id %>
+</p>
+
+<%= link_to 'Edit', edit_derivative_path(@derivative) %> |
+<%= link_to 'Back', derivatives_path %>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Model Ranges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Slug</th>
+      <th>Manufacturer</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @model_ranges.each do |model_range| %>
+      <tr>
+        <td><%= model_range.name %></td>
+        <td><%= model_range.slug %></td>
+        <td><%= model_range.manufacturer_id %></td>
+        <td><%= link_to 'Show', model_range %></td>
+        <td><%= link_to 'Edit', edit_model_range_path(model_range) %></td>
+        <td><%= link_to 'Destroy', model_range, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Model Range', new_model_range_path %>
