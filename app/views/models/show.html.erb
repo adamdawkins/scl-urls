@@ -1,19 +1,35 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @model.name %>
-</p>
+<h1><%= @model.name %></h1>
 
-<p>
-  <strong>Slug:</strong>
-  <%= @model.slug %>
-</p>
+<table>
+  <thead>
+    <tr>
+      <th>Capcode</th>
+      <th>Name</th>
+      <th>Bodystyle</th>
+      <th>Transmission</th>
+      <th>Fueltype</th>
+      <th>Doors</th>
+      <th>Model</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Model range:</strong>
-  <%= @model.model_range_id %>
-</p>
-
-<%= link_to 'Edit', edit_model_path(@model) %> |
-<%= link_to 'Back', models_path %>
+  <tbody>
+    <% @model.derivatives.each do |derivative| %>
+      <tr>
+        <td><%= derivative.capcode %></td>
+        <td><%= derivative.name %></td>
+        <td><%= derivative.bodytype.name %></td>
+        <td><%= derivative.transmission %></td>
+        <td><%= derivative.fueltype %></td>
+        <td><%= derivative.doors %></td>
+        <td><%= derivative.model_id %></td>
+        <td><%= link_to 'Show', derivative %></td>
+        <td><%= link_to 'Edit', edit_derivative_path(derivative) %></td>
+        <td><%= link_to 'Destroy', derivative, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,14 +1,7 @@
-<p id="notice"><%= notice %></p>
+<h1><%= @manufacturer.name %></h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @manufacturer.name %>
-</p>
-
-<p>
-  <strong>Slug:</strong>
-  <%= @manufacturer.slug %>
-</p>
-
-<%= link_to 'Edit', edit_manufacturer_path(@manufacturer) %> |
-<%= link_to 'Back', manufacturers_path %>
+<ul>
+  <% @model_ranges.each do |model_range| %>
+    <li> <%= link_to model_range.name, manufacturer_model_range_path(@manufacturer, model_range) %> </li>
+  <% end %>
+</ul>

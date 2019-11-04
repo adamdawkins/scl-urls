@@ -1,10 +1,11 @@
 class ModelRangesController < ApplicationController
   before_action :set_model_range, only: [:show, :edit, :update, :destroy]
+  before_action :set_manufacturer
 
   # GET /model_ranges
   # GET /model_ranges.json
   def index
-    @model_ranges = ModelRange.all
+    @model_ranges = @manufacturer.model_ranges
   end
 
   # GET /model_ranges/1
@@ -62,13 +63,17 @@ class ModelRangesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_model_range
-      @model_range = ModelRange.find(params[:id])
-    end
+
+  def set_model_range
+    @model_range = ModelRange.friendly.find(params[:id])
+  end
+
+  def set_manufacturer
+    @manufacturer = Manufacturer.friendly.find(params[:manufacturer_id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def model_range_params
-      params.require(:model_range).permit(:name, :slug, :manufacturer_id)
-    end
+  def model_range_params
+    params.require(:model_range).permit(:name, :slug, :manufacturer_id)
+  end
 end
