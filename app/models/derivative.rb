@@ -3,5 +3,5 @@ class Derivative < ApplicationRecord
   belongs_to :model
 
   extend FriendlyId
-  friendly_id :capcode, use: :slugged
+  friendly_id :name, use: :slugged
 end
