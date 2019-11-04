@@ -11,8 +11,6 @@
       <th>Transmission</th>
       <th>Fueltype</th>
       <th>Doors</th>
-      <th>Model</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -25,10 +23,6 @@
         <td><%= derivative.transmission %></td>
         <td><%= derivative.fueltype %></td>
         <td><%= derivative.doors %></td>
-        <td><%= derivative.model_id %></td>
-        <td><%= link_to 'Show', derivative %></td>
-        <td><%= link_to 'Edit', edit_derivative_path(derivative) %></td>
-        <td><%= link_to 'Destroy', derivative, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

@@ -5,10 +5,7 @@ Rails.application.routes.draw do
   get '/:channel_id/:id', to: 'manufacturers#show', as: :manufacturer
   get '/:id', to: 'channels#show', as: :channel
 
-  root controller: "channel", action: "show", params: { id: "car-leasing" }
-
-
-
+  root to: 'channels#show'
 
   # resources :model_ranges
   # resources :models
