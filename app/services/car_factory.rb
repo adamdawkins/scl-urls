@@ -5,33 +5,14 @@ class CarFactory
     model = create_model(data[:model].to_s, model_range)
     bodytype = create_bodytype data[:bodystyle]
 
-    create_derivative(model_id: model.id, bodytype_id: bodytype.id,
-                      capcode: data[:capcode], name: data[:derivative],
-                      transmission: transmission(data),
-                      fueltype: fueltype(data), doors: data[:doors])
+    create_derivative(model, bodytype, data)
   end
 
-  def self.fueltype(data)
-    type = data[:fueltype]
-    if type == 'P'
-      :petrol
-    elsif type == 'D'
-      :diesel
-    end
-  end
-
-  def self.transmission(data)
-    transmission = data[:transmission]
-    if transmission == 'M'
-      :manual
-    elsif transmission == 'A'
-      :automatic
-    end
-  end
-
-  def self.create_derivative(derivative)
-    Derivative.find_or_initialize_by(capcode: derivative[:capcode])
-              .update(derivative)
+  def self.create_derivative(model, bodytype, data)
+    Derivative.find_or_initialize_by(capcode: data[:capcode])
+              .update(model: model, bodytype: bodytype, name: data[:derivative],
+                      fueltype: data[:fueltype], doors: data[:doors],
+                      transmission: data[:transmission])
   end
 
   def self.create_manufacturer(name)
@@ -46,10 +27,16 @@ class CarFactory
   end
 
   def self.create_model(name, model_range)
-    new_name = name.gsub(model_range.name.capitalize, '')
-                   .gsub('DIESEL', '')
-                   .gsub(/SPECIAL EDITION\.?/, '')
-    model = Model.find_or_initialize_by(name: new_name.titleize)
+    new_name = name.gsub('_', ' ')
+                   .gsub('DIESEL', '').gsub(/SPECIAL EDITIONS?/, '')
+                   .strip
+
+    unless new_name == model_range.name.upcase
+      new_name = new_name.gsub(model_range.name.upcase, '')
+    end
+
+    model = Model.find_or_initialize_by(name: new_name.strip.titleize,
+                                        model_range_id: model_range.id)
     model.update(model_range: model_range)
 
     model

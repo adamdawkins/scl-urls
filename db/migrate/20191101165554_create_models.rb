@@ -7,7 +7,5 @@ class CreateModels < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :models, :name, unique: true
-    add_index :models, :slug, unique: true
   end
 end

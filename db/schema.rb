@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 2019_11_04_123837) do
     t.string "name"
     t.string "slug"
     t.bigint "bodytype_id", null: false
-    t.integer "transmission"
-    t.integer "fueltype"
+    t.string "transmission"
+    t.string "fueltype"
     t.integer "doors"
     t.bigint "model_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -86,8 +86,6 @@ ActiveRecord::Schema.define(version: 2019_11_04_123837) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["model_range_id"], name: "index_models_on_model_range_id"
-    t.index ["name"], name: "index_models_on_name", unique: true
-    t.index ["slug"], name: "index_models_on_slug", unique: true
   end
 
   add_foreign_key "derivatives", "bodytypes"

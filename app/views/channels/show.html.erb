@@ -1,1 +1,10 @@
 <h1><%= @channel.name %></h1>
+
+<h2>Manufacturers</h2>
+
+<ul>
+  <% Manufacturer.all.each do |man| %>
+    <li><%= link_to man.name, manufacturer_path(@channel, man) %></li>
+  <% end %>
+
+</ul>

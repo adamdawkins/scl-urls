@@ -5,8 +5,8 @@ class CreateDerivatives < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :slug
       t.belongs_to :bodytype, null: false, foreign_key: true
-      t.integer :transmission
-      t.integer :fueltype
+      t.string :transmission
+      t.string :fueltype
       t.integer :doors
 
       t.belongs_to :model, null: false, foreign_key: true
