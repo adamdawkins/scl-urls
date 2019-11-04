@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../support/url_matchers'
 
 describe 'Vehicle Requests', type: :request do
   describe 'GET /:id' do
@@ -23,6 +24,8 @@ describe 'Vehicle Requests', type: :request do
     context 'when the channel does not exist' do
       it 'should return a 404' do
         get '/boat-leasing'
+        expect(response).to have_path('/')
+
         expect(response).to have_http_status(404)
       end
     end
@@ -61,10 +64,29 @@ describe 'Vehicle Requests', type: :request do
     context 'manufacturer does not exist' do
       before do
         Channel.create(name: 'Car Leasing', slug: 'car-leasing')
+        Channel.create(name: 'Van Leasing', slug: 'van-leasing')
       end
 
       it 'returns a 404' do
         get('/car-leasing/saab')
+        expect(response).to have_http_status(404)
+      end
+
+      it 'redirects to the channel page' do
+        get('/car-leasing/saab')
+        expect(response).to have_path('/car-leasing')
+        get('/van-leasing/saab')
+        expect(response).to have_path('/van-leasing')
+      end
+    end
+
+    context 'channel does not exist' do
+      it 'redirects to the homepage' do
+        get('/boat-leasing/audi')
+        expect(response).to have_path('/')
+      end
+      it 'returns a 404' do
+        get('/boat-leasing/audi')
         expect(response).to have_http_status(404)
       end
     end

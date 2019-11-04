@@ -68,11 +68,13 @@ class ManufacturersController < ApplicationController
     def set_manufacturer
       @manufacturer = Manufacturer.friendly.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      return redirect_to(@channel, status: 404)
+      redirect_to(@channel, status: 404)
     end
 
     def set_channel
       @channel = Channel.friendly.find(params[:channel_id])
+    rescue ActiveRecord::RecordNotFound
+      return redirect_to root_path, status: 404
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
