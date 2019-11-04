@@ -1,4 +1,5 @@
 class ManufacturersController < ApplicationController
+  before_action :set_channel, only: :show
   before_action :set_manufacturer, only: [:show, :edit, :update, :destroy]
 
   # GET /manufacturers
@@ -66,6 +67,12 @@ class ManufacturersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_manufacturer
       @manufacturer = Manufacturer.friendly.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      return redirect_to(@channel, status: 404)
+    end
+
+    def set_channel
+      @channel = Channel.friendly.find(params[:channel_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
