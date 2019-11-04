@@ -46,7 +46,10 @@ class CarFactory
   end
 
   def self.create_model(name, model_range)
-    model = Model.find_or_initialize_by(name: name.titleize)
+    new_name = name.gsub(model_range.name.capitalize, '')
+                   .gsub('DIESEL', '')
+                   .gsub(/SPECIAL EDITION\.?/, '')
+    model = Model.find_or_initialize_by(name: new_name.titleize)
     model.update(model_range: model_range)
 
     model

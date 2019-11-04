@@ -1,5 +1,4 @@
 require 'rails_helper'
-require_relative '../support/url_matchers'
 
 describe 'Vehicle Requests', type: :request do
   describe 'GET /:id' do
@@ -24,8 +23,6 @@ describe 'Vehicle Requests', type: :request do
     context 'when the channel does not exist' do
       it 'should return a 404' do
         get '/boat-leasing'
-        expect(response).to have_path('/')
-
         expect(response).to have_http_status(404)
       end
     end
@@ -64,30 +61,65 @@ describe 'Vehicle Requests', type: :request do
     context 'manufacturer does not exist' do
       before do
         Channel.create(name: 'Car Leasing', slug: 'car-leasing')
-        Channel.create(name: 'Van Leasing', slug: 'van-leasing')
       end
 
       it 'returns a 404' do
         get('/car-leasing/saab')
         expect(response).to have_http_status(404)
-      end
-
-      it 'redirects to the channel page' do
-        get('/car-leasing/saab')
-        expect(response).to have_path('/car-leasing')
-        get('/van-leasing/saab')
-        expect(response).to have_path('/van-leasing')
       end
     end
 
     context 'channel does not exist' do
-      it 'redirects to the homepage' do
-        get('/boat-leasing/audi')
-        expect(response).to have_path('/')
-      end
       it 'returns a 404' do
-        get('/boat-leasing/audi')
+        get '/boat-leasing/audi'
         expect(response).to have_http_status(404)
+      end
+    end
+  end
+
+  #         GET /car-leasing/audi/a3
+  describe 'GET /:channel_id/:manufacturer_id/:id' do
+    context 'channel, manufacturer and range exists' do
+      let!(:channel) { Channel.create(name: 'Car Leasing', slug: 'car-leasing') }
+      let!(:manufacturer) { Manufacturer.create(name: 'Audi') }
+      let!(:model_range) { manufacturer.model_ranges.create(name: 'A3') }
+
+      it 'should return successfully' do
+        get '/car-leasing/audi/a3'
+        expect(response).to have_http_status 200
+      end
+
+      it 'should display the manufacturer name and range name in an h1' do
+        get '/car-leasing/audi/a3'
+        expect(response.body).to match %r{<h1>Audi A3</h1>}
+      end
+
+      context 'the model range has many models' do
+        before do
+          model_range.models.create(name: 'A3 Hatchback')
+          model_range.models.create(name: 'A3 Saloon')
+          model_range.models.create(name: 'A3 Convertible')
+        end
+
+        it 'should display the models' do
+          get '/car-leasing/audi/a3'
+
+          expect(response.body).to match 'A3 Hatchback'
+          expect(response.body).to match 'A3 Saloon'
+          expect(response.body).to match 'A3 Convertible'
+        end
+      end
+
+      context 'the model range has one model' do
+        before do
+          model_range.models.create(name: 'Hatchback')
+        end
+
+        it 'should redirect to the model' do
+          get '/car-leasing/audi/a3'
+
+          expect(response).to redirect_to '/car-leasing/audi/a3/hatchback'
+        end
       end
     end
   end

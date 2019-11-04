@@ -7,13 +7,9 @@ Rails.application.routes.draw do
 
   root controller: "channel", action: "show", params: { id: "car-leasing" }
 
-  # resources :manufacturers, path: 'car-leasing' do
-  #   resources :model_ranges do 
-  #     resources :models do 
-  #       resources :derivatives, only: :index
-  #     end
-  #   end
-  # end
+
+
+
   # resources :model_ranges
   # resources :models
   # resources :derivatives
