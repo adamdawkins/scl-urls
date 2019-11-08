@@ -6,12 +6,7 @@ class ModelRangesController < ApplicationController
   # GET /:channel_id/:manufacturer_id/:id
   # GET /car-leasing/audi/a3
   def show
-    return render(:show) unless @model_range.models.count == 1
-
-    redirect_to model_path(@channel,
-                           @manufacturer,
-                           @model_range,
-                           @model_range.models.first)
+    render :show
   end
 
   private
