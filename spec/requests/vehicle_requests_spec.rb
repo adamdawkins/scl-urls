@@ -123,4 +123,32 @@ describe 'Vehicle Requests', type: :request do
     it_behaves_like 'a 404 without a manufacturer'
     it_behaves_like 'a 404 without a channel'
   end
+
+  #         GET /car-leasing/audi/a3/hatchback/30-tfsi-116-se-technik-5dr
+  describe 'GET /:channel_id/:manufacturer_id/:model_range_id/:model_id/:derivative_id' do
+    let(:req) { get '/car-leasing/audi/a3/hatchback/30-tfsi-116-se-technik-5dr' }
+    let!(:channel) { Channel.create(name: 'Car Leasing', slug: 'car-leasing') }
+    let!(:manufacturer) { Manufacturer.create(name: 'Audi') }
+    let!(:model_range) { manufacturer.model_ranges.create(name: 'A3') }
+    let!(:model) { model_range.models.create(name: 'Hatchback') }
+    let!(:derivative) { model.derivatives.create(name: '30 TFSI 116 SE Technik 5dr', bodytype: Bodytype.create(name: 'Hatchback')) }
+
+    it_behaves_like 'a successful response'
+
+    context 'without a derivative' do
+      before do
+        Derivative.destroy_all
+      end
+
+      it 'returns a 404' do
+        req
+        expect(response).to have_http_status 404
+      end
+    end
+
+    it_behaves_like 'a 404 without a model'
+    it_behaves_like 'a 404 without a model range'
+    it_behaves_like 'a 404 without a manufacturer'
+    it_behaves_like 'a 404 without a channel'
+  end
 end

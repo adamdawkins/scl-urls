@@ -1,5 +1,9 @@
 class DerivativesController < ApplicationController
   before_action :set_derivative, only: [:show, :edit, :update, :destroy]
+  before_action :set_model
+  before_action :set_model_range
+  before_action :set_manufacturer
+  before_action :set_channel
 
   # GET /derivatives
   # GET /derivatives.json
@@ -62,13 +66,39 @@ class DerivativesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_derivative
-      @derivative = Derivative.friendly.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def derivative_params
-      params.require(:derivative).permit(:capcode, :name, :bodystyle_id, :transmission, :fueltype, :doors, :model_id)
-    end
+  def set_derivative
+    @derivative = Derivative.friendly.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  def set_model
+    @model = Model.friendly.find(params[:model_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  def set_model_range
+    @model_range = ModelRange.friendly.find(params[:model_range_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  def set_manufacturer
+    @manufacturer = Manufacturer.friendly.find(params[:manufacturer_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  def set_channel
+    @channel = Channel.friendly.find(params[:channel_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def derivative_params
+    params.require(:derivative).permit(:capcode, :name, :bodystyle_id, :transmission, :fueltype, :doors, :model_id)
+  end
 end
