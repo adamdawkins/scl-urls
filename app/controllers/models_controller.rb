@@ -1,6 +1,8 @@
 class ModelsController < ApplicationController
   before_action :set_model, only: [:show, :edit, :update, :destroy]
   before_action :set_model_range
+  before_action :set_manufacturer
+  before_action :set_channel
 
   # GET /models
   # GET /models.json
@@ -10,8 +12,7 @@ class ModelsController < ApplicationController
 
   # GET /models/1
   # GET /models/1.json
-  def show
-  end
+  def show; end
 
   # GET /models/new
   def new
@@ -19,8 +20,7 @@ class ModelsController < ApplicationController
   end
 
   # GET /models/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /models
   # POST /models.json
@@ -63,17 +63,32 @@ class ModelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_model
-      @model = Model.friendly.find(params[:id])
-    end
 
-    def set_model_range
-      @model_range = ModelRange.friendly.find(params[:model_range_id])
-    end
+  def set_model
+    @model = Model.friendly.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def model_params
-      params.require(:model).permit(:name, :slug, :model_range_id)
-    end
+  def set_model_range
+    @model_range = ModelRange.friendly.find(params[:model_range_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  def set_manufacturer
+    @manufacturer = Manufacturer.friendly.find(params[:manufacturer_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  def set_channel
+    @channel = Channel.friendly.find(params[:channel_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
+  end
+
+  def model_params
+    params.require(:model).permit(:name, :slug, :model_range_id)
+  end
 end

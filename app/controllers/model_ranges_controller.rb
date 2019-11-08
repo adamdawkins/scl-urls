@@ -18,13 +18,19 @@ class ModelRangesController < ApplicationController
 
   def set_model_range
     @model_range = ModelRange.friendly.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
   end
 
   def set_manufacturer
     @manufacturer = Manufacturer.friendly.find(params[:manufacturer_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
   end
 
   def set_channel
     @channel = Channel.friendly.find(params[:channel_id])
+  rescue ActiveRecord::RecordNotFound
+    render 'shared/404', status: :not_found
   end
 end

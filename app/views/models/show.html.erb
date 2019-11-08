@@ -18,7 +18,7 @@
     <% @model.derivatives.each do |derivative| %>
       <tr>
         <td><%= derivative.capcode %></td>
-        <td><%= derivative.name %></td>
+        <td><%= link_to derivative.name, derivative_path(@channel, @manufacturer, @model_range, @model, derivative) %></td>
         <td><%= derivative.bodytype.name %></td>
         <td><%= derivative.transmission %></td>
         <td><%= derivative.fueltype %></td>
