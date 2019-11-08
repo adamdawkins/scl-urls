@@ -2,7 +2,8 @@
   "environments": {
     "test": {
       "scripts": {
-        "test": "bundle exec rspec"
+        "test": "bundle exec rspec",
+        "test-setup": "rails webpacker:install"
       },
       "addons": [
         "heroku-postgresql:in-dyno"
