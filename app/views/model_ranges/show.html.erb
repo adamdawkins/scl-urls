@@ -1,6 +1,6 @@
 <h1><%= @model_range.manufacturer.name %> <%= @model_range.name %></h1>
 <ul>
   <% @model_range.models.each do |model| %>
-    <li><%= model.name %></li>
+    <li><%= link_to model.name, model_path(@channel, @manufacturer, @model_range, model)%></li>
   <% end %>
 </ul>
